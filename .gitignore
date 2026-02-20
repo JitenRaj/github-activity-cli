@@ -1,7 +1,10 @@
-# Compiled class file
+# =========================================================================
+# Java & Build Tools (Maven/Gradle)
+# =========================================================================
+# Compiled class files
 *.class
 
-# Log file
+# Log files
 *.log
 
 # BlueJ files
@@ -10,7 +13,7 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.nar
@@ -19,6 +22,70 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+# Avoid ignoring the wrapper jar so others can build the project
+!.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# =========================================================================
+# IDE Specific Files
+# =========================================================================
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+/cmake-build-*/
+
+# Visual Studio Code
+.vscode/
+.factorypath
+
+# Eclipse / STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# =========================================================================
+# OS & System Files
+# =========================================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# VM Crash logs
 hs_err_pid*
 replay_pid*
+
+# =========================================================================
+# Local Configuration & Secrets
+# =========================================================================
+.env
+.env.local
+.env.*.local
+*.properties.local
