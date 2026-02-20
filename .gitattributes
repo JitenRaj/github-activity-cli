@@ -1,0 +1,55 @@
+# -----------------------------------------------------------------------------
+# Global Default: Auto-detect text files and normalize line endings
+# -----------------------------------------------------------------------------
+* text=auto
+
+# -----------------------------------------------------------------------------
+# Java & Source Code (Force LF for cross-platform consistency)
+# -----------------------------------------------------------------------------
+*.java       text diff=java
+*.kt         text
+*.groovy     text
+*.properties text
+*.xml        text
+*.yml        text
+*.yaml       text
+*.json       text
+*.md         text
+*.html       text
+*.css        text
+*.js         text
+*.sql        text
+
+# -----------------------------------------------------------------------------
+# Scripts (Crucial for CI/CD and Shell environments)
+# -----------------------------------------------------------------------------
+# Unix/Linux/macOS scripts must use LF to be executable
+mvnw         text eol=lf
+gradlew      text eol=lf
+*.sh         text eol=lf
+
+# Windows scripts must use CRLF
+*.cmd        text eol=crlf
+*.bat        text eol=crlf
+
+# -----------------------------------------------------------------------------
+# Documentation & Config
+# -----------------------------------------------------------------------------
+LICENSE      text
+HELP.md      text
+.gitignore   text
+.editorconfig text
+
+# -----------------------------------------------------------------------------
+# Binary Files (Ensure Git doesn't try to "fix" line endings in images/jars)
+# -----------------------------------------------------------------------------
+*.jar        binary
+*.war        binary
+*.zip        binary
+*.tar.gz     binary
+*.png        binary
+*.jpg        binary
+*.jpeg       binary
+*.gif        binary
+*.ico        binary
+*.pdf        binary
