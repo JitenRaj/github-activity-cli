@@ -1,48 +1,79 @@
 package com.githubactivity.cli;
 
-import com.githubactivity.service.GithubActivityService;
+import com.githubactivity.cli.command.GithubCommand;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class GithubActivityCli implements CommandLineRunner {
 
-    private final GithubActivityService activityService;
+    private final Map<String, GithubCommand> commandRegistry;
 
-    public GithubActivityCli(GithubActivityService activityService) {
-        this.activityService = activityService;
+    public GithubActivityCli(List<GithubCommand> commands) {
+        // map each command by its unique name (e.g., "push", "star", "all")
+        this.commandRegistry = commands.stream()
+                .collect(Collectors.toMap(GithubCommand::getName, Function.identity()));
     }
 
     @Override
     public void run(String... args) {
-        if (args.length == 0) {
-            printUsage();
-            return;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("===================================");
+        System.out.println("   Welcome to GitHub Activity CLI  ");
+        System.out.println("===================================");
+        System.out.println("Type 'help' to see available commands, or 'exit' to quit.\n");
+
+        // Keep the application running in an infinite loop
+        while (true) {
+            System.out.print("github-activity> ");
+            String input = scanner.nextLine().trim();
+
+            // Check if the user wants to exit
+            if (input.equalsIgnoreCase("exit") || input.equalsIgnoreCase("quit")) {
+                System.out.println("Goodbye!");
+                break; // This breaks the loop and allows Spring Boot to stop
+            }
+
+            // Ignore empty inputs (if you just press Enter)
+            if (input.isEmpty()) {
+                continue;
+            }
+
+            // Parse the input string into arguments (split by spaces)
+            String[] inputArgs = input.split("\\s+");
+
+            // Handle explicit help requests
+            if (inputArgs[0].equalsIgnoreCase("help")) {
+                commandRegistry.get("help").execute(null);
+                System.out.println();
+                continue;
+            }
+
+            // Extract username and command
+            String username = inputArgs[0];
+            String commandName = inputArgs.length > 1 ? inputArgs[1].toLowerCase() : "all";
+
+            // Look up the requested command
+            GithubCommand command = commandRegistry.get(commandName);
+
+            if (command == null) {
+                System.out.println("Error: Unknown command '" + commandName + "'");
+                System.out.println("Type 'help' to see available commands.\n");
+                continue;
+            }
+
+            // Execute the valid command
+            System.out.println("Fetching '" + commandName + "' activity for " + username + "...\n");
+            command.execute(username);
+            System.out.println();
         }
 
-        String username = args[0];
-        String filter = null;
-
-        // Simple parsing for optional filter flag: --event=PushEvent
-        if (args.length > 1 && args[1].startsWith("--event=")) {
-            filter = args[1].split("=")[1];
-        }
-
-        System.out.println("Fetching activity for " + username + "...\n");
-        List<String> activities = activityService.getRecentActivity(username, filter);
-
-        if (activities.isEmpty()) {
-            System.out.println("No matching events found.");
-        } else {
-            activities.forEach(System.out::println);
-        }
-    }
-
-    private void printUsage() {
-        System.out.println("Usage: java -jar app.jar <username> [--event=<EventType>]");
-        System.out.println("Example: java -jar app.jar jitenraj");
-        System.out.println("Example: java -jar app.jar jitenraj --event=PushEvent");
+        scanner.close();
     }
 }
