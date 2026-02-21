@@ -1,7 +1,9 @@
 package com.githubactivity.service;
 
+import com.githubactivity.model.GithubEvent;
+
 import java.util.List;
 
 public interface GithubActivityService {
-    List<String> getRecentActivity(String username, String eventTypeFilter);
+    List<GithubEvent> getRawEvents(String username);
 }
