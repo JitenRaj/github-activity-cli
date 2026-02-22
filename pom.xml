@@ -11,8 +11,8 @@
 	<groupId>com.example</groupId>
 	<artifactId>githubactivity</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>github activity</name>
-	<description>Demo project for Spring Boot</description>
+	<name>github activity cli</name>
+	<description>An interactive CLI tool built with Java and Spring Boot to fetch, filter, and display recent GitHub activity for any user.</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -59,6 +59,14 @@
 		</dependency>
 
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/JitenRaj/github-activity-cli</url>
+		</repository>
+	</distributionManagement>
 
 	<build>
 		<plugins>
